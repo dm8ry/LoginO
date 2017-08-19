@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
 
-	<title>Logino</title>
+	<title>Logino | Forgot Password</title>
 	
 </head>
 
@@ -24,23 +24,18 @@
 			</div>		
 			<div class="col-sm-6 central-container">
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
-				<div class="login">Logino</div>
+				<div class="login">Logino | <span class="sub-title-container">Forgot Password</span></div>
 				<br/>
 				<form autocomplete="off">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="username" type="text" class="form-control" name="username" placeholder="Enter Username">						
+						<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+						<input id="email" type="text" class="form-control" name="email" placeholder="Enter Email">						
 					</div>
 					<br/>
-					<div class="input-group">
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					  <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password">
-					</div>
-					<br/>
-					<button type="submit" class="btn btn-default log-in-btn">Log In</button>
+					<button type="submit" class="btn btn-default log-in-btn">Reset A Password</button>
 					<hr/>				
 					  <div class="row">
-						<div class="col-sm-6"><span class="pull-left"><a href="forgot_password.php">Forgot password?</a></span></div>						
+						<div class="col-sm-6"><span class="pull-left"><a href="index.php">Log In</a></span></div>						
 						<div class="col-sm-6"><span class="pull-right"><a href="signup.php">Sign Up</a></span></div>
 					  </div>					  
 					<br/>					
@@ -48,10 +43,10 @@
 			</div>			
 			<div class="col-sm-3">
 			</div>						
-		</div>
-						
+		</div>		
 	</div>	
-			
+	
+	
     <footer class="footer">
       <div class="container">
 		 <span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
@@ -59,5 +54,6 @@
       </div>
     </footer>
  
+	
 </body>
 </html>
