@@ -1,4 +1,4 @@
-# README #
+# Logino #
 
 Logino is authentication and authorization front-end example. 
 
