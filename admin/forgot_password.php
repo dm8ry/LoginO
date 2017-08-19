@@ -24,7 +24,7 @@
 			</div>		
 			<div class="col-sm-6 central-container">
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
-				<div class="login">Logino | <span class="sub-title-container">Forgot Password</span></div>
+				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Forgot Password</span></div>
 				<br/>
 				<form autocomplete="off">
 					<div class="input-group">
@@ -49,8 +49,8 @@
 	
     <footer class="footer">
       <div class="container">
-		 <span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
-        <span class="pull-right"><a href="https://github.com/dmrsoft/logino" target="_blank">dmrsoft/Logino</a></span>
+		<span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
+		<span class="pull-right"><a href="https://github.com/dmrsoft/logino" target="_blank">dmrsoft/<span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span></a></span>
       </div>
     </footer>
  
