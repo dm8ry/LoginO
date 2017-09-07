@@ -1,6 +1,6 @@
 <?php
-$db_host = "mysql.dmrsoft.com";
-$db_user = "dmrsoft9";
-$db_pwd = "Sydney!234";
-$db_name = "dmrsoftdb";
+$db_host = "ffffff";
+$db_user = "xxxxxxxx";
+$db_pwd = "xxxxxx";
+$db_name = "xxxxxx";
 ?>
