@@ -40,6 +40,11 @@ input[type="text"],input[type="password"]{
 	background-color: #fff;
 }
 
+#alert_username, #alert_password {
+	font-size: 16px;
+	border-radius: 10px;
+}
+
 a {
 	color: #fff;
 	font-size: 16px;
@@ -116,6 +121,13 @@ a:active {
 	font-style: normal; 
 	font-size:18px;
 }	
+
+.sub-title-container-yellow {
+	font-weight: normal; 
+	font-style: normal; 
+	font-size:18px;	
+	color: #fdff9b;
+}
 
 #random-content {
     position: relative;

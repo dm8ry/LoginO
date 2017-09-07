@@ -6,14 +6,18 @@
 
 require_once('db_params.php');
 
-function dbOpenConnection($db_host, $db_user, $db_pwd, $db_name) {
-
+function dbOpenConnection() {
+	
+	global $db_host, $db_user, $db_pwd, $db_name;
+	
 	// Create connection
 	$conn = new mysqli($db_host, $db_user, $db_pwd, $db_name);
+
 	// Check connection
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	} 
+
 	$conn->query("set names 'utf8'");	
 	
 	return $conn;
@@ -25,6 +29,37 @@ function dbCloseConnection($db_conn) {
 	$conn->close();	
 	
 }	
+
+function checkAdminLogin($username, $md5password)
+{
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00001';
+	}	
+	
+	$sql_q = "select * from logino_user where username='$username' and passw=md5('$md5password') and is_active=1 and is_confirmed=1";
+								
+	$arr_q = array();		
+	
+	$results_q = mysqli_query($dbConnection, $sql_q); 
+	
+	$rowcount=mysqli_num_rows($results_q);
+					
+	if ($rowcount == 1)
+	{
+		return "Ok";
+	}
+	else
+	{
+		return "Err_00002";
+	}
+	
+	dbCloseConnection($dbConnection);
+}
+
+
 	
 /*----------------------------------------------------------*/	
 	

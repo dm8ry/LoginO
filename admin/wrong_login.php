@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-<?php
-	require_once('./../lib/functions.php');
-?>
-
 <html lang="en">
 <head>
 
@@ -11,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Logino">
 	<meta name="keywords" content="Logino, Logino">
-    <meta name="author" content="Author">	
+    <meta name="author" content="Author">
 
 	<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
@@ -36,10 +31,8 @@
 	<link href="./../css/font-awesome.css" rel="stylesheet">	
 	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
-				
-	<script type="text/javascript" src="./../js/admin_logino.js"></script>
 
-	<title>LoginO</title>
+	<title>Logino | Wrong Login and/or Password.</title>
 	
 </head>
 
@@ -51,27 +44,12 @@
 			</div>		
 			<div class="col-sm-6 central-container">
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
-				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span></div>
+				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Wrong Login and/or Password!</span></div>
 				<br/>
-				<form autocomplete="off" method="post" name="frmAdminLogIn" id="frmAdminLogIn" enctype="multipart/form-data">				
-					<div id="alert_username" class="alert alert-warning" style="display: none;">					  
-					</div>				
-					<div class="input-group">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="username" type="text" class="form-control" name="username" placeholder="Enter Username">						
-					</div>
-					<br/>
-					<div id="alert_password" class="alert alert-warning" style="display: none;">					  
-					</div>					
-					<div class="input-group">
-					  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					  <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password">
-					</div>
-					<br/>
-					<button type="submit" id="btnAdminLogin" name="btnAdminLogin" onclick="doAdminLogin(); return false;" class="btn btn-default log-in-btn">Log In</button>
+				<form autocomplete="off">					
 					<hr/>				
 					  <div class="row">
-						<div class="col-sm-6"><span class="pull-left"><a href="forgot_password.php">Forgot password?</a></span></div>						
+						<div class="col-sm-6"><span class="pull-left"><a href="index.php">Log In</a></span></div>						
 						<div class="col-sm-6"><span class="pull-right"><a href="signup.php">Sign Up</a></span></div>
 					  </div>					  
 					<br/>					
@@ -79,10 +57,10 @@
 			</div>			
 			<div class="col-sm-3">
 			</div>						
-		</div>
-						
+		</div>		
 	</div>	
-			
+	
+	
     <footer class="footer">
       <div class="container">
 		<span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
@@ -90,5 +68,6 @@
       </div>
     </footer>
  
+	
 </body>
 </html>
