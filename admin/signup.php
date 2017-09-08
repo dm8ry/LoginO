@@ -31,6 +31,8 @@
 	<link href="./../css/font-awesome.css" rel="stylesheet">	
 	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
+	
+	<script type="text/javascript" src="./../js/admin_logino.js"></script>
 
 	<title>Logino | Sign Up</title>
 	
@@ -46,12 +48,16 @@
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
 				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Sign Up</span></div>
 				<br/>
-				<form autocomplete="off">
+				<form autocomplete="off" method="post" name="frmAdminSignUp" id="frmAdminSignUp" enctype="multipart/form-data">
+					<div id="alert_username" class="alert alert-warning" style="display: none;">
+					</div>
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 						<input id="username" type="text" class="form-control" name="username" placeholder="Enter Username">						
 					</div>
 					<br/>
+					<div id="alert_email" class="alert alert-warning" style="display: none;">
+					</div>					
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 						<input id="email" type="text" class="form-control" name="email" placeholder="Enter Email">						
@@ -64,6 +70,8 @@
 					</div>
 					<br/>
 					-->
+					<div id="alert_password" class="alert alert-warning" style="display: none;">
+					</div>						
 					<div class="input-group">
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 					  <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password">
@@ -76,7 +84,7 @@
 					</div>
 					<br/>
 					-->
-					<button type="submit" class="btn btn-default log-in-btn">Sign Up</button>
+					<button type="submit" id="btnAdminSignUp" name="btnAdminSignUp" class="btn btn-default log-in-btn" onclick="doAdminSignUp(); return false;">Sign Up</button>
 					<hr/>				
 					  <div class="row">
 						<div class="col-sm-6">&nbsp;</div>						

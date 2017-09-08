@@ -4,13 +4,35 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">	
+    <meta name="description" content="Logino">
+	<meta name="keywords" content="Logino, Logino">
+    <meta name="author" content="Author">	
+
+	<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/icons/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+	<link rel="manifest" href="/icons/manifest.json">
+	<link rel='shortcut icon' type='image/x-icon' href='/icons/favicon.ico' />
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">	
 
 	<link rel="stylesheet" href="./../css/bootstrap.min.css"> 
 	<link href="./../css/font-awesome.css" rel="stylesheet">	
 	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript" src="./../js/admin_logino.js"></script>
 
 	<title>Logino | Forgot Password</title>
 	
@@ -26,13 +48,15 @@
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
 				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Forgot Password</span></div>
 				<br/>
-				<form autocomplete="off">
+				<form autocomplete="off" method="post" name="frmAdminResetPassword" id="frmAdminResetPassword" enctype="multipart/form-data">
+					<div id="alert_email" class="alert alert-warning" style="display: none;">					  
+					</div>				
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
 						<input id="email" type="text" class="form-control" name="email" placeholder="Enter Email">						
 					</div>
 					<br/>
-					<button type="submit" class="btn btn-default log-in-btn">Reset A Password</button>
+					<button type="submit" id="btnResetPassword" name="btnResetPassword" class="btn btn-default log-in-btn" onclick="doAdminResetPassword(); return false;">Reset A Password</button>
 					<hr/>				
 					  <div class="row">
 						<div class="col-sm-6"><span class="pull-left"><a href="index.php">Log In</a></span></div>						

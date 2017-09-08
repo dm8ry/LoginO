@@ -40,7 +40,7 @@ input[type="text"],input[type="password"]{
 	background-color: #fff;
 }
 
-#alert_username, #alert_password {
+#alert_username, #alert_password, #alert_email {
 	font-size: 16px;
 	border-radius: 10px;
 }

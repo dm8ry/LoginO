@@ -32,7 +32,7 @@
 	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
 
-	<title>Logino | Wrong Login and/or Password.</title>
+	<title>Logino | Wrong Login and/or Password!</title>
 	
 </head>
 

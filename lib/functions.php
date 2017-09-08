@@ -6,6 +6,10 @@
 
 require_once('db_params.php');
 
+function isValidEmail($email){ 
+	return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
 function dbOpenConnection() {
 	
 	global $db_host, $db_user, $db_pwd, $db_name;
@@ -30,7 +34,7 @@ function dbCloseConnection($db_conn) {
 	
 }	
 
-function checkAdminLogin($username, $md5password)
+function checkAdminLogin($username, $pure_password)
 {
 	$dbConnection = dbOpenConnection();
 	
@@ -39,7 +43,7 @@ function checkAdminLogin($username, $md5password)
 		return 'Err_00001';
 	}	
 	
-	$sql_q = "select * from logino_user where username='$username' and passw=md5('$md5password') and is_active=1 and is_confirmed=1";
+	$sql_q = "select * from logino_user where username='$username' and passw=md5('$pure_password') and is_active=1 and is_confirmed=1";
 								
 	$arr_q = array();		
 	
@@ -58,6 +62,221 @@ function checkAdminLogin($username, $md5password)
 	
 	dbCloseConnection($dbConnection);
 }
+
+
+
+function doAdminSignUp($username, $email, $pure_password)
+{
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00005';
+	}	
+	
+	$unique_id = uniqid();
+	
+	$sql_q = "INSERT INTO logino_user(username, email, passw, phone, first_name, last_name, country, city, salt_value, changed_by) 
+					VALUES ('$username', '$email', md5('$pure_password'), '', '', '', '', '', md5('$email#$username#$pure_password#$unique_id') , 'system') ";
+						
+	$results_q = mysqli_query($dbConnection, $sql_q); 
+	
+	if ($results_q === TRUE)
+	{
+		return "Ok";
+	}
+	else
+	{
+		return "Err_00006";
+	}
+	
+	dbCloseConnection($dbConnection);
+}
+
+
+function doResetAPassword($email)
+{
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00008';
+	}	
+	
+	$sql_q = "select * from logino_user where upper(email)=upper('$email') and is_active=1";
+								
+	$arr_q = array();		
+	
+	$results_q = mysqli_query($dbConnection, $sql_q); 
+	
+	$rowcount=mysqli_num_rows($results_q);
+					
+	if ($rowcount == 1)
+	{
+		
+		$unique_id = uniqid();
+		
+		$new_salt = md5($unique_id.'#'.$email);
+		
+		$screw_password = md5('#'.$email.'#'.$unique_id);
+		
+		$sql_q = "update logino_user 
+					set passw = '$screw_password',
+						is_confirmed = 0,
+						salt_value = '$new_salt',
+						changed_by = 'system',
+						modify_dt = now()
+					where upper(email)=upper('$email') and is_active=1";
+
+		mysqli_query($dbConnection, $sql_q); 		
+		
+		return $new_salt;
+	}
+	else
+	{
+		return "Err_00009";
+	}
+	
+	dbCloseConnection($dbConnection);		
+}
+	
+function getAdminEmail()
+{
+
+	$adm_email = 'xxx@dmrsoft.com';
+	
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00012';
+	}		
+	
+	$sql_app_properties = "select * from logino_app_config";
+								
+	$arr_app_properties = array();		
+	$results_app_properties = mysqli_query($dbConnection, $sql_app_properties); 	
+	
+	while($line = mysqli_fetch_assoc($results_app_properties)){
+		$arr_app_properties[] = $line;
+		
+		if ($line[the_parameter] == 'admin_email')
+		{
+			$adm_email = $line[the_value];
+		}
+	}			
+		
+	return $adm_email;
+
+	dbCloseConnection($dbConnection);	
+
+}	
+
+
+function getBaseURL()
+{
+
+	$base_url = 'http://no.no';
+	
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00014';
+	}		
+	
+	$sql_app_properties = "select * from logino_app_config";
+								
+	$arr_app_properties = array();		
+	$results_app_properties = mysqli_query($dbConnection, $sql_app_properties); 	
+	
+	while($line = mysqli_fetch_assoc($results_app_properties)){
+		$arr_app_properties[] = $line;
+		
+		if ($line[the_parameter] == 'base_url')
+		{
+			$base_url = $line[the_value];
+		}
+	}			
+	
+	return $base_url;
+	
+	dbCloseConnection($dbConnection);
+	
+}	
+	
+function sendResetAPasswordEmail($salt_val)
+{
+	
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00010';
+	}	
+	
+	$sql_q = "select * from logino_user where salt_value='$salt_val' and is_active=1";
+								
+	$arr_q = array();		
+	
+	$results_q = mysqli_query($dbConnection, $sql_q); 
+	
+	$rowcount=mysqli_num_rows($results_q);
+	
+	$the_email = '';
+	$username = '';
+	
+	if ($rowcount == 1)
+	{
+		
+		while($line = mysqli_fetch_assoc($results_q)){
+			$arr_q[] = $line;
+						
+			$the_email = $line[email];
+			$username = $line[username];
+			
+		}
+
+		$admin_email = getAdminEmail();
+		
+		$base_url = getBaseURL();
+		
+		if (substr($base_url, -1) != '/')
+		{		
+			$base_url = $base_url . '/';
+		}
+	
+		$subject = "LoginO Administrator: Reset A Password";	
+
+		$headers = "From: " . strip_tags($admin_email) . "\r\n";
+		$headers .= "Reply-To: ". strip_tags($admin_email) . "\r\n";		
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";			
+		
+		mb_internal_encoding("UTF-8");
+
+		$message = "<html><body>Dear $username, " . "<br/><br/> " ."\r\n" .
+					 "This email was sent according to your request to reset password. " . " <br/><br/> " ."\r\n" .
+					 "Please follow this link to reset your password: <a href='". $base_url ."admin/reset_a_password.php?uobjid=".$salt_val."' target='_blank'><b>Reset Your Password</b></a><br/><br/>" ."\r\n" .											
+					 "Regards, " . " <br/> " ."\r\n" .
+					 "LoginO.</body></html>";					
+		
+		mail($the_email, "$subject", $message, $headers);
+		
+		return 'Ok';
+
+	}
+	else
+	{
+		return "Err_00011";
+	}
+	
+	dbCloseConnection($dbConnection);
+	
+}	
+
+
+
 
 
 	
