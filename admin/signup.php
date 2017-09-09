@@ -63,13 +63,11 @@
 						<input id="email" type="text" class="form-control" name="email" placeholder="Enter Email">						
 					</div>
 					<br/>
-					<!--
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
 						<input id="phone" type="text" class="form-control" name="phone" placeholder="Enter Phone">						
 					</div>
 					<br/>
-					-->
 					<div id="alert_password" class="alert alert-warning" style="display: none;">
 					</div>						
 					<div class="input-group">
@@ -99,12 +97,7 @@
 	
 	</div>	
 				
-    <footer class="footer">
-      <div class="container">
-		<span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
-		<span class="pull-right"><a href="https://github.com/dmrsoft/logino" target="_blank">dmrsoft/<span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span></a></span>
-      </div>
-    </footer>
+    <?php include_once('footer.php'); ?>
  
 </body>
 </html>

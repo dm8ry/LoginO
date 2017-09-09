@@ -63,6 +63,7 @@
 					  <input id="confirm_password" type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
 					</div>
 					<br/>
+					<input id="uobjid" name="uobjid" value="<? echo $_GET['uobjid']; ?>" type="hidden">
 					<button type="submit" id="btnAdminResetAPassword" name="btnAdminResetAPassword" class="btn btn-default log-in-btn" onclick="doAdminResetAPassword(); return false;">Save</button>
 					<hr/>				
 					  <div class="row">
@@ -78,12 +79,7 @@
 	
 	</div>	
 				
-    <footer class="footer">
-      <div class="container">
-		<span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
-		<span class="pull-right"><a href="https://github.com/dmrsoft/logino" target="_blank">dmrsoft/<span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span></a></span>
-      </div>
-    </footer>
+    <?php include_once('footer.php'); ?>
  
 </body>
 </html>

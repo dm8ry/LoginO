@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Logino">
 	<meta name="keywords" content="Logino, Logino">
-    <meta name="author" content="Author">	
+    <meta name="author" content="Author">
 
 	<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
@@ -26,13 +26,13 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">	
-
+	
 	<link rel="stylesheet" href="./../css/bootstrap.min.css"> 
 	<link href="./../css/font-awesome.css" rel="stylesheet">	
 	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
 
-	<title>Logino | Wrong Reset A Password</title>
+	<title>Logino | Login from black listed IP</title>
 	
 </head>
 
@@ -44,12 +44,12 @@
 			</div>		
 			<div class="col-sm-6 central-container">
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
-				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Wrong Reset A Password!</span></div>
+				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Login from black listed IP!</span></div>
 				<br/>
-				<form autocomplete="off">	
+				<form autocomplete="off">		
 				  <div class="row">
-					<div class="col-sm-12" style="text-align:center;">No such email registered in our system. Please check details with your administrator! Thank you for using <span style="color: red; font-weight: bold;">Login</span><span style="color: white; font-weight: bold; font-style: italic;">O</span>!</div>											
-				  </div>					
+					<div class="col-sm-12" style="text-align:center;">You login from black listed IP. Please check details with your administrator! Thank you for using <span style="color: red; font-weight: bold;">Login</span><span style="color: white; font-weight: bold; font-style: italic;">O</span>!</div>											
+				  </div>				
 					<hr/>				
 					  <div class="row">
 						<div class="col-sm-6"><span class="pull-left"><a href="index.php">Log In</a></span></div>						

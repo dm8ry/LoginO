@@ -45,7 +45,7 @@ function doAdminLogin()
 						
 	if (nErrors==0)
 	{					
-		var url = "./../lib/check_admin_login.php";
+		var url = "./../lib/logino_check_admin_login.php";
 					
 		var oData = new FormData(document.forms.namedItem("frmAdminLogIn"));
 		
@@ -56,11 +56,28 @@ function doAdminLogin()
 			if (oReq.status == 200) 
 			{			
 				// alert('>>'+oReq.responseText);
+				
+				if (oReq.responseText.indexOf("ErrorMessage") !== -1)
+				{
+					alert(oReq.responseText);
+				}
 
-				if (oReq.responseText=='Ok') 
+				if (oReq.responseText.localeCompare('Ok') == 0) 
 				{				
 					window.location.replace("./../admin/success_login.php");				
 				}
+				else if (oReq.responseText.localeCompare('Err_00029') == 0) 
+				{
+					window.location.replace("./../admin/non_confirmed_login.php");
+				}
+				else if (oReq.responseText.localeCompare('Err_00030') == 0) 
+				{
+					window.location.replace("./../admin/disabled_user_login.php");
+				}	
+				else if (oReq.responseText.localeCompare('Err_00031') == 0) 
+				{
+					window.location.replace("./../admin/black_ip_login.php");
+				}					
 				else
 				{
 					window.location.replace("./../admin/wrong_login.php");			
@@ -143,7 +160,7 @@ function doAdminSignUp()
 						
 	if (nErrors==0)
 	{					
-		var url = "./../lib/do_admin_signup.php";
+		var url = "./../lib/logino_do_admin_signup.php";
 					
 		var oData = new FormData(document.forms.namedItem("frmAdminSignUp"));
 		
@@ -161,7 +178,18 @@ function doAdminSignUp()
 				}
 				else
 				{
-					window.location.replace("./../admin/wrong_signup.php");			
+					if (oReq.responseText == 'Err_00028')
+					{
+						window.location.replace("./../admin/duplicate_signup.php");
+					}
+					else if (oReq.responseText == 'Err_00035')
+					{
+						window.location.replace("./../admin/duplicate2_signup.php");
+					}
+					else
+					{
+						window.location.replace("./../admin/wrong_signup.php");
+					}
 				} 
 				return;			
 				
@@ -175,9 +203,9 @@ function doAdminSignUp()
 }
 
 
-// doAdminResetPassword
+// doAdminForgotPassword
 
-function doAdminResetPassword()
+function doAdminForgotPassword()
 {
 	var nErrors = 0;
 	
@@ -210,9 +238,9 @@ function doAdminResetPassword()
 						
 	if (nErrors==0)
 	{					
-		var url = "./../lib/do_reset_password.php";
+		var url = "./../lib/logino_do_reset_password.php";
 					
-		var oData = new FormData(document.forms.namedItem("frmAdminResetPassword"));
+		var oData = new FormData(document.forms.namedItem("frmAdminForgotPassword"));
 		
 		var oReq = new XMLHttpRequest();
 		  oReq.open("POST", url, true);
@@ -240,4 +268,76 @@ function doAdminResetPassword()
 
 		oReq.send(oData); 
 	}
+}
+
+
+// doAdminResetAPassword
+
+function doAdminResetAPassword()
+{
+	var nErrors = 0;
+	
+	document.getElementById("alert_password").innerHTML = "";
+	document.getElementById("alert_password").style.display = "none";
+	document.getElementById("alert_confirm_password").innerHTML = "";
+	document.getElementById("alert_confirm_password").style.display = "none";	
+		
+	if (document.getElementById("password").value==null || document.getElementById("password").value=="")
+	{
+		document.getElementById("alert_password").innerHTML = "Error! No password provided!";
+		document.getElementById("alert_password").style.display = "block";
+		nErrors++;
+	}
+	else if (document.getElementById("password").value.length < 5)
+	{
+		document.getElementById("alert_password").innerHTML = "Error! Password is too short!";
+		document.getElementById("alert_password").style.display = "block";
+		nErrors++;
+	}	
+	else if (document.getElementById("password").value != document.getElementById("confirm_password").value)
+	{
+		document.getElementById("alert_confirm_password").innerHTML = "Error! Passwords are not the same!";
+		document.getElementById("alert_confirm_password").style.display = "block";
+		nErrors++;
+	}		
+	else 
+	{
+		document.getElementById("alert_password").innerHTML = "";
+		document.getElementById("alert_password").style.display = "none";
+		document.getElementById("alert_confirm_password").innerHTML = "";
+		document.getElementById("alert_confirm_password").style.display = "none";	
+	}	
+						
+	if (nErrors==0)
+	{	
+				
+		var url = "./../lib/logino_do_save_a_new_password.php";
+					
+		var oData = new FormData(document.forms.namedItem("frmAdminResetAPassword"));
+				
+		var oReq = new XMLHttpRequest();
+		  oReq.open("POST", url, true);
+		  oReq.onload = function(oEvent) {
+								
+			if (oReq.status == 200) 
+			{			
+				// alert('>>'+oReq.responseText);
+				  				
+				if (oReq.responseText=='Ok') 
+				{	
+					window.location.replace("./../admin/success_savenewpassword.php");				
+				}
+				else
+				{
+					window.location.replace("./../admin/wrong_savenewpassword.php");			
+				} 
+				return;			
+				
+			} else {
+			  alert("Error " + oReq.status + " occurred.<br \/>");
+			}
+		  };
+
+		oReq.send(oData); 
+	}	
 }

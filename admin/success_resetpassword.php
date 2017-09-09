@@ -48,7 +48,7 @@
 				<br/>
 				<form autocomplete="off">	
 				  <div class="row">
-					<div class="col-sm-12" style="text-align:center;">Congratulations! We have succesfully reset your password! Please check your email for the details. Thank you for using <span style="color: red; font-weight: bold;">Login</span><span style="color: white; font-weight: bold; font-style: italic;">O</span>!</div>											
+					<div class="col-sm-12" style="text-align:center;">Congratulations! Please check your email to reset your password. Thank you for using <span style="color: red; font-weight: bold;">Login</span><span style="color: white; font-weight: bold; font-style: italic;">O</span>!</div>											
 				  </div>					
 					<hr/>				
 					  <div class="row">
@@ -64,12 +64,7 @@
 	</div>	
 	
 	
-    <footer class="footer">
-      <div class="container">
-		<span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
-		<span class="pull-right"><a href="https://github.com/dmrsoft/logino" target="_blank">dmrsoft/<span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span></a></span>
-      </div>
-    </footer>
+    <?php include_once('footer.php'); ?>
  
 	
 </body>

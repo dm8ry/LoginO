@@ -48,7 +48,7 @@
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
 				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Forgot Password</span></div>
 				<br/>
-				<form autocomplete="off" method="post" name="frmAdminResetPassword" id="frmAdminResetPassword" enctype="multipart/form-data">
+				<form autocomplete="off" method="post" name="frmAdminForgotPassword" id="frmAdminForgotPassword" enctype="multipart/form-data">
 					<div id="alert_email" class="alert alert-warning" style="display: none;">					  
 					</div>				
 					<div class="input-group">
@@ -56,7 +56,7 @@
 						<input id="email" type="text" class="form-control" name="email" placeholder="Enter Email">						
 					</div>
 					<br/>
-					<button type="submit" id="btnResetPassword" name="btnResetPassword" class="btn btn-default log-in-btn" onclick="doAdminResetPassword(); return false;">Reset A Password</button>
+					<button type="submit" id="btnForgotPassword" name="btnForgotPassword" class="btn btn-default log-in-btn" onclick="doAdminForgotPassword(); return false;">Reset A Password</button>
 					<hr/>				
 					  <div class="row">
 						<div class="col-sm-6"><span class="pull-left"><a href="index.php">Log In</a></span></div>						
@@ -71,12 +71,7 @@
 	</div>	
 	
 	
-    <footer class="footer">
-      <div class="container">
-		<span class="pull-left">&copy; DmR<i>soft</i>, 2017</span>
-		<span class="pull-right"><a href="https://github.com/dmrsoft/logino" target="_blank">dmrsoft/<span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span></a></span>
-      </div>
-    </footer>
+    <?php include_once('footer.php'); ?>
  
 	
 </body>

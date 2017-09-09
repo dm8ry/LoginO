@@ -6,7 +6,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
- require_once 'functions.php';
+ require_once 'logino_functions.php';
 
  if(isset($_POST['username']) && isset($_POST['password']))
  {
