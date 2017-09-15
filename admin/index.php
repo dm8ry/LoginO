@@ -1,8 +1,12 @@
-<!DOCTYPE html>
+<?php session_start(); 
 
-<?php
-	require_once('./../lib/logino_functions.php');
+require_once('./../lib/logino_functions.php');
+
+$lang=load_translations();
+
 ?>
+
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -32,18 +36,50 @@
 	<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">	
 	
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="./../css/bootstrap.min.css"> 
 	<link href="./../css/font-awesome.css" rel="stylesheet">	
-	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">	
+	<link rel="stylesheet" type="text/css" href="./../css/jquery.flipcountdown.css" />
 				
 	<script type="text/javascript" src="./../js/admin_logino.js"></script>
-
+	
 	<title>LoginO</title>
 	
 </head>
 
 <body>
+
+	 <div class="navbar navbar-inverse navbar-static-top" style="margin-bottom:0;" >
+		<div class="container" style="font-size:15px;">
+				
+			<button class ="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">		
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>		
+			</button>
+			
+			<div class="collapse navbar-collapse navHeaderCollapse">
+			
+				<ul class="nav navbar-nav navbar-left">			
+					<li><a title="Home" href="index.php"><span class="glyphicon glyphicon-home"></span></a></li>				
+				</ul>
+
+			  <ul class="nav navbar-nav navbar-right">
+			
+				<li class="dropdown">
+				  <a href="#" title="Choose a Language..." class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><? echo getCurrentLanguage(); ?> <span class="caret"></span></a>
+				  <ul class="dropdown-menu" style="border-radius:12px">						
+						<?php echo getLanguagesNavBarDropDownMenu(); ?>
+				  </ul>
+				</li>
+				
+			  </ul>
+								 
+			</div> 
+			
+		</div> 
+	 </div> 	 
 
 	<div class="container">	
 		<div class="row">		
@@ -58,21 +94,21 @@
 					</div>				
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-						<input id="username" type="text" class="form-control" name="username" placeholder="Enter Username">						
+						<input id="username" type="text" class="form-control" name="username" placeholder="<?php echo $lang->getTranslation('ENTER_USERNAME'); ?>">						
 					</div>
 					<br/>
 					<div id="alert_password" class="alert alert-warning" style="display: none;">					  
 					</div>					
 					<div class="input-group">
 					  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-					  <input id="password" type="password" class="form-control" name="password" placeholder="Enter Password">
+					  <input id="password" type="password" class="form-control" name="password" placeholder="<?php echo $lang->getTranslation('ENTER_PASSWORD'); ?>">
 					</div>
 					<br/>
-					<button type="submit" id="btnAdminLogin" name="btnAdminLogin" onclick="doAdminLogin(); return false;" class="btn btn-default log-in-btn">Log In</button>
+					<button type="submit" id="btnAdminLogin" name="btnAdminLogin" onclick="doAdminLogin('<?php echo $lang->getTranslation('ERROR_NO_USERNAME_PROVIDED'); ?>', '<?php echo $lang->getTranslation('ERROR_USERNAME_IS_TOO_SHORT'); ?>', '<?php echo $lang->getTranslation('ERROR_NO_PASSWORD_PROVIDED'); ?>'); return false;" class="btn btn-default log-in-btn"><?php echo $lang->getTranslation('LOGIN'); ?></button>
 					<hr/>				
 					  <div class="row">
-						<div class="col-sm-6"><span class="pull-left"><a href="forgot_password.php">Forgot password?</a></span></div>						
-						<div class="col-sm-6"><span class="pull-right"><a href="signup.php">Sign Up</a></span></div>
+						<div class="col-sm-6"><span class="pull-left"><a href="forgot_password.php"><?php echo $lang->getTranslation('FORGOT_PASSWORD'); ?></a></span></div>						
+						<div class="col-sm-6"><span class="pull-right"><a href="signup.php"><?php echo $lang->getTranslation('SIGN_UP'); ?></a></span></div>
 					  </div>					  
 					<br/>					
 				</form>
@@ -80,10 +116,26 @@
 			<div class="col-sm-3">
 			</div>						
 		</div>
+		
+		<?php  echo toShowDigitalClocks(); ?>
 						
 	</div>	
 			
     <?php include_once('footer.php'); ?>
+	
+	<script src="./../js/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="./../js/jquery.flipcountdown.js"></script>
+	<script type="text/javascript" src="./../js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			$("#retroclockbox1").flipcountdown({
+				size:"sm"
+			});
+		})
+	
+	</script>
  
 </body>
 </html>

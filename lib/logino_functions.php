@@ -1,10 +1,11 @@
-<?php
+<?php session_start();
 
 /* --------- */
 /* functions */
 /* --------- */
 
 require_once('db_params.php');
+require_once('./../classes/language2.class.php');
 
 function isValidEmail($email)
 { 
@@ -69,6 +70,38 @@ function getLoginoAppConfig($par_name, $par_def_val)
 
 }
 
+function isBlackListedIP($ip_addr)
+{
+
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00001';
+	}	
+	
+	$sql_q = "select * from logino_blacklisted_ip where ip_addr = '$ip_addr' or '$ip_addr' REGEXP ip_addr";		
+	
+	$results_q = mysqli_query($dbConnection, $sql_q); 
+	
+	if (!$results_q) {
+		return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+	}		
+	
+	$rowcount=mysqli_num_rows($results_q);
+
+	if ($rowcount == 1)	
+	{	
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+	
+	dbCloseConnection($dbConnection);	
+}
+
 function checkAdminLogin($username, $pure_password)
 {
 	$dbConnection = dbOpenConnection();
@@ -76,6 +109,28 @@ function checkAdminLogin($username, $pure_password)
 	if ($dbConnection === NULL)
 	{
 		return 'Err_00001';
+	}	
+	
+	// check if IP is not black listed
+	
+	$ip_addr = getIP();
+	
+	if (isBlackListedIP($ip_addr) == 1)
+	{
+		
+		/// ip is black listed
+		
+		$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+		select id, '$ip_addr', 'ip_addr=$ip_addr; username=$username; passw=$pure_password;'  
+			from logino_business_alert where the_name = 'ADMIN_BLACKLISTED_IP' ";
+
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}	
+		else
+		{	
+			return "Err_00031";
+		}			
 	}	
 	
 	// check that such user is confirmed
@@ -139,18 +194,45 @@ function checkAdminLogin($username, $pure_password)
 			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
 		}	
 		else
-		{				
-			return "Ok";
+		{		
+
+			$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+			select id, '$ip_addr', 'username=$username; passw=$pure_password;'  
+				from logino_business_alert where the_name = 'ADMIN_LOGIN_SUCCESS' ";
+	
+			if (!mysqli_query($dbConnection, $sql_q)) {
+				return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+			}	
+			else
+			{	
+				$_SESSION['xcode']='Ok';
+				return "Ok";
+			}		
 		}
 	}
 	else
 	{
-		return "Err_00002";
+		// busines log insert
+		// LOGIN_FAILURE
+		
+		$ip_addr = getIP();
+		
+		$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+					select id, '$ip_addr', 'username=$username; passw=$pure_password;'  
+						from logino_business_alert where the_name = 'ADMIN_LOGIN_FAILURE' ";
+
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}	
+		else
+		{				
+			return "Err_00002";
+		}		
+
 	}
 	
 	dbCloseConnection($dbConnection);
 }
-
 
 
 function doAdminSignUp($username, $email, $pure_password, $phone)
@@ -172,7 +254,21 @@ function doAdminSignUp($username, $email, $pure_password, $phone)
 
 	if ($rowcount != 0)	
 	{
-		return 'Err_00028';
+		
+		$ip_addr = getIP();
+	
+		$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+		select id, '$ip_addr', 'username=$username; email=$email; phone=$phone; new_password=$new_password;'  
+			from logino_business_alert where the_name = 'ADMIN_SIGN_UP_DUPLICATE_EMAIL' ";
+
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}	
+		else
+		{	
+			return "Err_00028";
+		}			
+
 	}
 	
 	// check that such username doesn't exist
@@ -185,7 +281,19 @@ function doAdminSignUp($username, $email, $pure_password, $phone)
 
 	if ($rowcount != 0)	
 	{
-		return 'Err_00035';
+		$ip_addr = getIP();
+		
+		$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+		select id, '$ip_addr', 'username=$username; email=$email; phone=$phone; new_password=$new_password;'  
+			from logino_business_alert where the_name = 'ADMIN_SIGN_UP_DUPLICATE_USERNAME' ";
+
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}	
+		else
+		{	
+			return "Err_00035";
+		}		
 	}	
 		
 	$unique_id = uniqid();
@@ -230,9 +338,21 @@ function doAdminSignUp($username, $email, $pure_password, $phone)
 		}
 		else
 		{
-			return "Ok";
-		}		
-		
+			
+			$ip_addr = getIP();
+			
+			$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+			select id, '$ip_addr', 'username=$username; passw=$pure_password; email=$email; phone=$phone; salt_val=$salt_val; '  
+				from logino_business_alert where the_name = 'ADMIN_SIGN_UP' ";
+	
+			if (!mysqli_query($dbConnection, $sql_q)) {
+				return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+			}	
+			else
+			{	
+				return "Ok";
+			}
+		}				
 	}
 	else
 	{
@@ -276,9 +396,22 @@ function doResetAPassword($email)
 						modify_dt = now()
 					where upper(email)=upper('$email') and is_active=1";
 
-		mysqli_query($dbConnection, $sql_q); 		
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}		
 		
-		return $new_salt;
+		$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+			select id, '$ip_addr', 'email=$email'  
+			from logino_business_alert where the_name = 'ADMIN_RESET_PASSWORD' ";
+
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}	
+		else
+		{	
+			return $new_salt;
+		}		
+		
 	}
 	else
 	{
@@ -434,9 +567,20 @@ function confirmSignUp($uobjid)
 		}
 		else
 		{
-			return 'Ok';
-		}
-		
+			$ip_addr = getIP();
+			
+			$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+			select id, '$ip_addr', 'email=$the_email; username=$username;'  
+				from logino_business_alert where the_name = 'ADMIN_SIGN_UP_CONFIRMED' ";
+	
+			if (!mysqli_query($dbConnection, $sql_q)) {
+				return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+			}	
+			else
+			{	
+				return 'Ok';
+			}						
+		}		
 	}
 	else
 	{
@@ -477,8 +621,20 @@ function saveANewPassword($uobjid, $new_password)
 		{
 			return 'Err_00025';
 		}
+		
+		$ip_addr = getIP();
 	
-		return 'Ok';
+		$sql_q = "insert into logino_businesslog (alert_id, ip_addr, info)
+		select id, '$ip_addr', 'salt_value=$uobjid; new_password=$new_password;'  
+			from logino_business_alert where the_name = 'ADMIN_NEW_PASSWORD_SAVED' ";
+
+		if (!mysqli_query($dbConnection, $sql_q)) {
+			return ("ErrorMessage: %s\n".mysqli_error($dbConnection));
+		}	
+		else
+		{	
+			return "Ok";
+		}	
 				
 	}
 	else
@@ -489,7 +645,97 @@ function saveANewPassword($uobjid, $new_password)
 	dbCloseConnection($dbConnection);	
 	
 }
+
+
+function toShowDigitalClocks()
+{
 	
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00005';
+	}		
+	
+	$the_answer = getLoginoAppConfig('is_to_show_dig_clock', '0');
+	
+	$ret_code =	"<div class='row'>
+					<div class='col-sm-3'>
+					</div>
+					<div class='col-sm-6'>				
+						<div id='retroclockbox1' style='padding: 20px; text-align: center;'></div>
+					</div>
+					<div class='col-sm-3'>
+					</div>
+				</div>";
+		
+	if ($the_answer == '1')
+	{
+		return $ret_code;
+	}
+	else
+	{
+		return ' ';
+	}
+	dbCloseConnection($dbConnection);
+	
+}
+	
+function getCurrentLanguage()
+{
+	if ( ! isset($_SESSION['current_language']) ) 
+	{
+		$_SESSION['current_language'] = 'English';
+	}
+
+	return $_SESSION['current_language'];
+}	
+	
+function getLanguagesNavBarDropDownMenu()
+{
+
+	$dbConnection = dbOpenConnection();
+	
+	if ($dbConnection === NULL)
+	{
+		return 'Err_00050';
+	}		
+	
+	$sql_logino_language = "select * from logino_language where status=1 order by the_name";
+								
+	$arr_logino_language = array();		
+	$results_logino_language = mysqli_query($dbConnection, $sql_logino_language); 	
+	
+	while($line = mysqli_fetch_assoc($results_logino_language)){
+		$arr_logino_language[] = $line;
+	}	
+	
+	$the_output = '';
+	
+	for($idc=0; $idc<sizeof($arr_logino_language); $idc++)
+	{
+		$the_output = $the_output."<li><a href='#' title='".$arr_logino_language[$idc]['the_name']."' onclick='changeCurrentLanguage(\"".
+			$arr_logino_language[$idc]['the_name']."\");'>".$arr_logino_language[$idc]['the_name']."</a></li> \n";
+	}
+	
+	return $the_output;
+	
+	dbCloseConnection($dbConnection);
+}	
+	
+function changeLanguage($the_language)
+{
+	$_SESSION['current_language'] = $the_language;		
+	return 'Ok';		
+}	
+
+function load_translations()
+{
+	$cur_lang = getCurrentLanguage();
+    $lang = new Language($cur_lang);
+	return $lang;	
+}
+
 /*----------------------------------------------------------*/	
 
 ?>

@@ -2,20 +2,20 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // 
-// Do Admin Sign Up
+// Change Current Language
 //
 /////////////////////////////////////////////////////////////////////////////
- 
+
  require_once 'logino_functions.php';
 
-	if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']))
+ if(isset($_POST['the_language']))
  {
-	$answer = doAdminSignUp($_POST['username'], $_POST['email'], $_POST['password'], $_POST['phone']);
+	$answer = changeLanguage($_POST['the_language']);
 	echo $answer;
  }
  else
  {
-	 echo "Err_00004";
- } 
+	 echo "Err_00062";
+ }
  
 ?>

@@ -8,7 +8,7 @@ function validateEmail(email) {
 
 // doAdminLogin
 
-function doAdminLogin()
+function doAdminLogin(err_msg1, err_msg2, err_msg3)
 {
 	var nErrors = 0;
 	
@@ -19,19 +19,19 @@ function doAdminLogin()
 		
 	if (document.getElementById("username").value==null || document.getElementById("username").value=="")
 	{
-		document.getElementById("alert_username").innerHTML = "Error! No username provided!";
+		document.getElementById("alert_username").innerHTML = err_msg1; // "Error! No username provided!";
 		document.getElementById("alert_username").style.display = "block";
 		nErrors++;
 	}	
 	else if (document.getElementById("username").value.length < 5)
 	{
-		document.getElementById("alert_username").innerHTML = "Error! Username is too short!";
+		document.getElementById("alert_username").innerHTML = err_msg2; // "Error! Username is too short!";
 		document.getElementById("alert_username").style.display = "block";
 		nErrors++;
 	}		
 	else if (document.getElementById("password").value==null || document.getElementById("password").value=="")
 	{
-		document.getElementById("alert_password").innerHTML = "Error! No password provided!";
+		document.getElementById("alert_password").innerHTML = err_msg3; // "Error! No password provided!";
 		document.getElementById("alert_password").style.display = "block";
 		nErrors++;
 	}	
@@ -340,4 +340,26 @@ function doAdminResetAPassword()
 
 		oReq.send(oData); 
 	}	
+}
+
+function changeCurrentLanguage(the_language)
+{
+	
+	var http = new XMLHttpRequest();
+	var url = "./../lib/logino_change_current_language.php";
+	var params = "the_language="+the_language;
+	http.open("POST", url, true);
+
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+	http.onreadystatechange = function() {
+		if(http.readyState == 4 && http.status == 200) {
+			
+			// alert(http.responseText);
+			// refresh the page to update languages
+								
+			window.location.reload(true);
+		}
+	}
+	http.send(params);	
 }
