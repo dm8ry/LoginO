@@ -1,6 +1,6 @@
 # LoginO #
 
-LoginO is authentication and authorization front-end framework. 
+LoginO is a useful authentication and authorization framework. 
 
 It can be used both as a stand-alone module and as to be integrated in some application(s).
 
@@ -22,7 +22,7 @@ Author: Dmitry Romanoff
 
 ![Logino](https://github.com/dmrsoft/logino/raw/master/screenshots/6.jpg)
 
-## Technologiesgi
+## Technologies
 
 > PHP, CSS, JavaScript, Bootstrap, jQuery, MySQL, etc.
 
