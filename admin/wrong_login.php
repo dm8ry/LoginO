@@ -1,10 +1,8 @@
 <?php session_start(); 
 
-if (!$_SESSION['xcode'])
-{
-	header("Location: index.php");
-	exit;
-}
+require_once('./../lib/logino_functions.php');
+
+$lang=load_translations();
 
 ?>
 
@@ -37,10 +35,13 @@ if (!$_SESSION['xcode'])
 	<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">	
 	
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="./../css/bootstrap.min.css"> 
 	<link href="./../css/font-awesome.css" rel="stylesheet">	
-	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300" rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="./../css/adm_style.css">	
+	<link rel="stylesheet" type="text/css" href="./../css/jquery.flipcountdown.css" />
+				
+	<script type="text/javascript" src="./../js/admin_logino.js"></script>
 
 	<title>Logino | Wrong Login and/or Password!</title>
 	
@@ -48,34 +49,51 @@ if (!$_SESSION['xcode'])
 
 <body>
 
+	<?php include_once('header.php'); ?>
+	
 	<div class="container">	
 		<div class="row">		
 			<div class="col-sm-3">
 			</div>		
 			<div class="col-sm-6 central-container">
 				<a href="index.php"><img src="./../img/admin_login_imgage_2.png"></a>
-				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container">Wrong Login and/or Password!</span></div>
+				<div class="login"><span style="color: red; font-style: normal;">Login</span><span style="color: white">O</span> | <span class="sub-title-container"><?php echo $lang->getTranslation('TITLE_1_WL'); ?></span></div>
 				<br/>
 				<form autocomplete="off">		
 				  <div class="row">
-					<div class="col-sm-12" style="text-align:center;">You've tried to login with non-existing or wrong username and/or password. Please check details with your administrator! Thank you for using <span style="color: red; font-weight: bold;">Login</span><span style="color: white; font-weight: bold; font-style: italic;">O</span>!</div>											
+					<div class="col-sm-12" style="text-align:center;"><?php echo $lang->getTranslation('MAIN_MESSAGE_WL'); ?> <span style="color: red; font-weight: bold;">Login</span><span style="color: white; font-weight: bold; font-style: italic;">O</span>!</div>											
 				  </div>				
 					<hr/>				
 					  <div class="row">
-						<div class="col-sm-6"><span class="pull-left"><a href="index.php">Log In</a></span></div>						
-						<div class="col-sm-6"><span class="pull-right"><a href="signup.php">Sign Up</a></span></div>
+						<div class="col-sm-6"><span class="pull-left"><a href="index.php"><?php echo $lang->getTranslation('LOGIN_WL'); ?></a></span></div>						
+						<div class="col-sm-6"><span class="pull-right"><a href="signup.php"><?php echo $lang->getTranslation('SIGN_UP_WL'); ?></a></span></div>
 					  </div>					  
 					<br/>					
 				</form>
 			</div>			
 			<div class="col-sm-3">
 			</div>						
-		</div>		
-	</div>	
-	
+		</div>	
+
+		<?php  echo toShowDigitalClocks(); ?>
+		
+	</div>		
 	
    <?php include_once('footer.php'); ?>
- 
+   
+	<script src="./../js/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="./../js/jquery.flipcountdown.js"></script>
+	<script type="text/javascript" src="./../js/bootstrap.min.js"></script>
 	
+	<script type="text/javascript">
+	
+		$(function(){
+			$("#retroclockbox1").flipcountdown({
+				size:"sm"
+			});
+		})
+	
+	</script>   
+ 	
 </body>
 </html>

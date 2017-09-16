@@ -8,8 +8,13 @@ function validateEmail(email) {
 
 // doAdminLogin
 
-function doAdminLogin(err_msg1, err_msg2, err_msg3)
+function doAdminLogin()
 {
+	
+	err_msg1= document.getElementById("err_msg1").value;
+	err_msg2= document.getElementById("err_msg2").value;
+	err_msg3= document.getElementById("err_msg3").value;	
+	
 	var nErrors = 0;
 	
 	document.getElementById("alert_username").innerHTML = "";
@@ -97,6 +102,15 @@ function doAdminLogin(err_msg1, err_msg2, err_msg3)
 
 function doAdminSignUp()
 {
+	
+	err_msg1= document.getElementById("err_msg1").value;
+	err_msg2= document.getElementById("err_msg2").value;
+	err_msg3= document.getElementById("err_msg3").value;
+	err_msg4= document.getElementById("err_msg4").value;
+	err_msg5= document.getElementById("err_msg5").value;
+	err_msg6= document.getElementById("err_msg6").value;
+	err_msg7= document.getElementById("err_msg7").value;
+	
 	var nErrors = 0;
 	
 	document.getElementById("alert_username").innerHTML = "";
@@ -108,43 +122,43 @@ function doAdminSignUp()
 		
 	if (document.getElementById("username").value==null || document.getElementById("username").value=="")
 	{
-		document.getElementById("alert_username").innerHTML = "Error! No username provided!";
+		document.getElementById("alert_username").innerHTML = err_msg1; // "Error! No username provided!";
 		document.getElementById("alert_username").style.display = "block";
 		nErrors++;
 	}	
 	else if (document.getElementById("username").value.length < 5)
 	{
-		document.getElementById("alert_username").innerHTML = "Error! Username is too short!";
+		document.getElementById("alert_username").innerHTML = err_msg2; // "Error! Username is too short!";
 		document.getElementById("alert_username").style.display = "block";
 		nErrors++;
 	}
 	else if (document.getElementById("email").value==null || document.getElementById("email").value=="")
 	{
-		document.getElementById("alert_email").innerHTML = "Error! No email provided!";
+		document.getElementById("alert_email").innerHTML = err_msg3; // "Error! No email provided!";
 		document.getElementById("alert_email").style.display = "block";
 		nErrors++;
 	}
 	else if (document.getElementById("email").value.length < 5)
 	{
-		document.getElementById("alert_email").innerHTML = "Error! Email is too short!";
+		document.getElementById("alert_email").innerHTML =  err_msg4; // "Error! Email is too short!";
 		document.getElementById("alert_email").style.display = "block";
 		nErrors++;
 	}	
 	else if (!validateEmail(document.getElementById("email").value))
 	{
-		document.getElementById("alert_email").innerHTML = "Error! Not Valid Email!";
+		document.getElementById("alert_email").innerHTML = err_msg5; // "Error! Not Valid Email!";
 		document.getElementById("alert_email").style.display = "block";
 		nErrors++;
 	}	
 	else if (document.getElementById("password").value==null || document.getElementById("password").value=="")
 	{
-		document.getElementById("alert_password").innerHTML = "Error! No password provided!";
+		document.getElementById("alert_password").innerHTML = err_msg6; // "Error! No password provided!";
 		document.getElementById("alert_password").style.display = "block";
 		nErrors++;
 	}
 	else if (document.getElementById("password").value.length < 5)
 	{
-		document.getElementById("alert_password").innerHTML = "Error! Password is too short!";
+		document.getElementById("alert_password").innerHTML = err_msg7; // "Error! Password is too short!";
 		document.getElementById("alert_password").style.display = "block";
 		nErrors++;
 	}	

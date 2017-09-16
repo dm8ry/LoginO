@@ -1,11 +1,5 @@
 <?php session_start(); 
 
-if (!$_SESSION['xcode'])
-{
-	header("Location: index.php");
-	exit;
-}
-
 ?>
 
 <!DOCTYPE html>

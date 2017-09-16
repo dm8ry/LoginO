@@ -736,6 +736,20 @@ function load_translations()
 	return $lang;	
 }
 
+function show_header()
+{
+	$answer = '0';	
+	$answer = getLoginoAppConfig('show_header','0');	
+	return $answer;
+}
+
+function show_footer()
+{
+	$answer = '0';	
+	$answer = getLoginoAppConfig('show_footer','0');	
+	return $answer;
+}
+
 /*----------------------------------------------------------*/	
 
 ?>

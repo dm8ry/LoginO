@@ -50,36 +50,7 @@ $lang=load_translations();
 
 <body>
 
-	 <div class="navbar navbar-inverse navbar-static-top" style="margin-bottom:0;" >
-		<div class="container" style="font-size:15px;">
-				
-			<button class ="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">		
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>		
-			</button>
-			
-			<div class="collapse navbar-collapse navHeaderCollapse">
-			
-				<ul class="nav navbar-nav navbar-left">			
-					<li><a title="Home" href="index.php"><span class="glyphicon glyphicon-home"></span></a></li>				
-				</ul>
-
-			  <ul class="nav navbar-nav navbar-right">
-			
-				<li class="dropdown">
-				  <a href="#" title="Choose a Language..." class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><? echo getCurrentLanguage(); ?> <span class="caret"></span></a>
-				  <ul class="dropdown-menu" style="border-radius:12px">						
-						<?php echo getLanguagesNavBarDropDownMenu(); ?>
-				  </ul>
-				</li>
-				
-			  </ul>
-								 
-			</div> 
-			
-		</div> 
-	 </div> 	 
+ 	<?php include_once('header.php'); ?>
 
 	<div class="container">	
 		<div class="row">		
@@ -104,7 +75,11 @@ $lang=load_translations();
 					  <input id="password" type="password" class="form-control" name="password" placeholder="<?php echo $lang->getTranslation('ENTER_PASSWORD'); ?>">
 					</div>
 					<br/>
-					<button type="submit" id="btnAdminLogin" name="btnAdminLogin" onclick="doAdminLogin('<?php echo $lang->getTranslation('ERROR_NO_USERNAME_PROVIDED'); ?>', '<?php echo $lang->getTranslation('ERROR_USERNAME_IS_TOO_SHORT'); ?>', '<?php echo $lang->getTranslation('ERROR_NO_PASSWORD_PROVIDED'); ?>'); return false;" class="btn btn-default log-in-btn"><?php echo $lang->getTranslation('LOGIN'); ?></button>
+					<input type="hidden" name="err_msg1" id="err_msg1" value="<?php echo $lang->getTranslation('ERROR_NO_USERNAME_PROVIDED'); ?>">
+					<input type="hidden" name="err_msg2" id="err_msg2" value="<?php echo $lang->getTranslation('ERROR_USERNAME_IS_TOO_SHORT'); ?>">
+					<input type="hidden" name="err_msg3" id="err_msg3" value="<?php echo $lang->getTranslation('ERROR_NO_PASSWORD_PROVIDED'); ?>">
+					
+					<button type="submit" id="btnAdminLogin" name="btnAdminLogin" onclick="doAdminLogin(); return false;" class="btn btn-default log-in-btn"><?php echo $lang->getTranslation('LOGIN'); ?></button>
 					<hr/>				
 					  <div class="row">
 						<div class="col-sm-6"><span class="pull-left"><a href="forgot_password.php"><?php echo $lang->getTranslation('FORGOT_PASSWORD'); ?></a></span></div>						
