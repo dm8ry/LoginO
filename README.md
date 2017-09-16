@@ -22,9 +22,9 @@ Author: Dmitry Romanoff
 
 ![Logino](https://github.com/dmrsoft/logino/raw/master/screenshots/6.jpg)
 
-## Technologies
+## Technologiesgi
 
-> php, js, MySQL, etc.
+> PHP, CSS, JavaScript, Bootstrap, jQuery, MySQL, etc.
 
 ## LoginO Screenshots
 
