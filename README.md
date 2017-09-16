@@ -1,6 +1,6 @@
 # LoginO #
 
-LoginO is authentication and authorization front-end example. 
+LoginO is authentication and authorization front-end framework. 
 
 It can be used both as a stand-alone module and as to be integrated in some application(s).
 
